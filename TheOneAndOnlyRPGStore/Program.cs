@@ -9,12 +9,6 @@ namespace TheOneAndOnlyRPGStore
     class Program
     {
 
-        struct PlayerItem
-        {
-            
-        }
-        
-        
         static void MainMenu()
         {
             Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}" +
@@ -34,25 +28,30 @@ namespace TheOneAndOnlyRPGStore
                             "\n| Type inventory to check out what you have in you inventory                                                         |" +
                             "\n| Type adventurers to send out people to gather items(cost of each adventurer is 25 * guild lvl)                     |" +
                             "\n| Type shop to check out you shop and put items up for sale (there is a max of 10 items you can put up for sale)     |" +
+                            "\n| The shop works by giving you a customer that want to buy an item from your invetory you will give a price and the -|" +
+                            "\n| will decide if they want to buy it or not                                                                          |"+
                             "\n| Type save to save your game                                                                                        |" +
                             "\n| Type gold to see how much gold you currently have                                                                  |" +
                             "\n| Type menu to go back to the main menu (this will save your game)                                                   |" +
                             "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}");
         }
-        public int PlayerGold = 0;
-        public void Main(string[] args)
+
+
+        public static void Main()
         {
             //cmd and lCmd are used to take the users input and 
             string cmd = "";
             string lCmd = "";
             //IBS = Items being sold
-            string IBS = "";
             ItemCreation itemCreator = new ItemCreation();
             Asks eg = new Asks();
             Adventurers ad = new Adventurers();
-
+            Random random = new Random();
+            Customer customer = new Customer();
+            PlayerStats ps = new PlayerStats();
             bool New = false;
             bool Saved = false;
+            int PlayerGold= 0;
             MainMenu();
             while (lCmd != "exit")
             {
@@ -62,7 +61,7 @@ namespace TheOneAndOnlyRPGStore
                 if (lCmd == "new")
                 {
                     New = true;
-                    PlayerGold = 100;
+                    PlayerGold += 100;
                     Console.WriteLine("If you need help type help into the command prompt to bring up a list of commands.");
                     Console.WriteLine("Here are some starting items.");
                     Console.WriteLine("");
@@ -99,22 +98,51 @@ namespace TheOneAndOnlyRPGStore
                                        $"\n You currently have {ad.AS} out gathering items" +
                                         "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}");
                         lCmd = eg.Ask("Do you want to send out any Adventurers? " +
-                                      "\nType yes to send out adventurers or type anything else to go back to the command screen");
+                                      "\nType yes to send out adventurers or type anything else to go back to the command screen. " +
+                                      "\n");
                         if(lCmd == "yes")
                         {
-                            ad.SendAdventurer();
+                            int.TryParse(eg.Ask("How many adventurers would you like to send? "), out ad.AWTS);
+                            ad.AC = ad.AWTS * (25 * ad.ALVL);
+                            if (ad.AC <= PlayerGold && itemCreator.InvetoryCount <= 100)
+                            {
+                                ad.AS += ad.AWTS;
+                                Console.WriteLine($"you have sent out {ad.AS} Adventurers!");
+                                PlayerGold -= ad.AC;
+                            }
+                            else if (ad.AC > PlayerGold)
+                            {
+                                Console.WriteLine("You do not have the gold to fund this many adventurers.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("You already have to many items. sell some before you send out more adventurers!");
+                            }
                         }
                     }
                     //Will allow the player to see what they are selling, the chance the item is sold, and how much each item is being sold for
                     if (lCmd == "shop")
                     {
-                        lCmd = eg.Ask("Do you want to check the shop or put an item up for saleor checking your stock?" +
-                                    "/nType shop to check the shop and stock to check your stock");
-                        if (lCmd == "shop")
+                        lCmd = eg.Ask("Do you want to work at your shop This hour?" +
+                                    "\nType sell to work the shop, do anthing else to go back." +
+                                    "\n");
+                        if (lCmd == "sell" && itemCreator.InvetoryCount > 0)
                         {
-                            Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}" +
-                                             $" You have                                                   Work in progress                                                 " +
-                                              "{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}");
+                            int CustomersChoice;
+                            int Price;
+                            CustomersChoice = random.Next(0, itemCreator.InvetoryCount);
+                            Console.WriteLine("");
+                            Console.WriteLine("After a while a costumer enters the shop asking about the price of");
+                            itemCreator.GettingValue(CustomersChoice);
+                            int.TryParse(eg.Ask("How much would you like to sell the item for?"), out Price);
+                            itemCreator.GettingValue2(CustomersChoice);
+                            customer.CustomersDecision(itemCreator.Cost ,Price);
+                            if (customer.ItemSold)
+                            {
+                                
+                                PlayerGold += Price;
+                            }
+
                         }
                         else if(lCmd == "stock")
                         {
@@ -126,11 +154,19 @@ namespace TheOneAndOnlyRPGStore
                     if (lCmd == "close")
                     {
                         lCmd = eg.Ask("Do you really want to go to close up for the day?" +
-                                      "\nType yes to go to close, type anything else to do something else.");
+                                      "\nType yes to close, type anything else to do something else." +
+                                      "\n");
                         if (lCmd == "yes")
                         {
-                            Console.WriteLine("the Adventurers you sent out have brought back");
-                            ad.AdventurersReturn();
+                            if (ad.AS > 0)
+                            {
+                                Console.WriteLine("the Adventurers you sent out have brought back");
+                                ad.AdventurersReturn();
+                            }
+                            else
+                            {
+                                Console.WriteLine("you sent out no adventurers");
+                            }
                         }
                     }
                     //Saves the game
@@ -143,7 +179,10 @@ namespace TheOneAndOnlyRPGStore
                     {
                         itemCreator.Creation(1);
                     }
-                    if (lCmd == "");
+                    if (lCmd == "gold")
+                    {
+                        Console.WriteLine($"You have {PlayerGold}");
+                    }
                 }
             }
 

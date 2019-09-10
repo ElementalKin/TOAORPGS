@@ -18,6 +18,7 @@ namespace TheOneAndOnlyRPGStore
             public string TypeOfWeapon;
             public int value;
         }
+
         //All of the qualitys, material, and type of weapon.
         //Q = weapon quality, M = weapon material, T = weapon type
         //W = weapon, B = Bow, A = Armour
@@ -31,12 +32,33 @@ namespace TheOneAndOnlyRPGStore
         public string[] AM = new string[4] { "Copper", "Bronze", "Iron", "Steel" };
         public string[] AT = new string[5] { "Chainmail", "Cuirasses", "Chestplate", "Halfplate", "FullPlate", };
         Asks eg = new Asks();
+        Program program = new Program();
         public Item[] Inv = new Item[100];
         public int InvetoryCount = 0;
         public int InvetoryIdx = 0;
+        public int Cost;
+        private int[] RemoveIndices(int[] IndicesArray, int RemoveAt)
+        {
+            int[] newIndicesArray = new int[IndicesArray.Length - 1];
+
+            int i = 0;
+            int j = 0;
+            while (i < IndicesArray.Length)
+            {
+                if (i != RemoveAt)
+                {
+                    newIndicesArray[j] = IndicesArray[i];
+                    j++;
+                }
+
+                i++;
+            }
+
+            return newIndicesArray;
+        }
 
         //Creates a random number.
-            Random random = new Random();
+        Random random = new Random();
         //This can be called to create an item and it will store the item to the inventory of the player.
         public void Creation(int x)
         {
@@ -273,13 +295,24 @@ namespace TheOneAndOnlyRPGStore
 
 
         }
+        public void GettingValue(int x)
+        {
+            Item item = Inv[x];
+            Console.Write($" {item.quality} {item.material} {item.TypeOfWeapon}(it is Worth {item.value})");
+        }
+        public void GettingValue2(int x)
+        {
+            Item item = Inv[x];
+            Cost = item.value;
+            
+        }
         //A void for checking the invetory.
         public void Inventory()
         {
             for (int idx = 0; idx < InvetoryCount; idx++)
             {
                 Item item = Inv[idx];
-                eg.MyPrinter($"{item.quality} {item.material} {item.TypeOfWeapon} value is {item.value}");
+                eg.MyPrinter($"{item.quality} {item.material} {item.TypeOfWeapon} worth {item.value}");
             }
         }
     }

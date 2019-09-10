@@ -8,35 +8,18 @@ namespace TheOneAndOnlyRPGStore
 {
     class Adventurers
     {
-        Program program = new Program();
+        PlayerStats ps = new PlayerStats();
         Asks eg = new Asks();
         ItemCreation itemCreator = new ItemCreation();
-        int AWTS;
-        int AC;
+        Program program = new Program();
+        public int AWTS;
+        public int AC;
 
         public int AS;
         public int AXP;
         public int ALVL  = 1;
         public double XPTNLVL = 100;
         Random random = new Random();
-        public void SendAdventurer()
-        {
-            int.TryParse(eg.Ask("How many adventurers would you like to send?"), out AWTS);
-            AC = AWTS * (25 * ALVL);
-            if(AC <= program.PlayerGold && itemCreator.InvetoryCount <= 100)
-            {
-                AS += AWTS;
-                Console.WriteLine($"you have sent out {AS} Adventurers!");
-            }
-            else if(AC > program.PlayerGold)
-            {
-                Console.WriteLine("You do not have the gold to fund this many adventurers.");
-            }
-            else
-            {
-                Console.WriteLine("You already have to many items. sell some before you send out more adventurers!");
-            }
-        }
         public void AdventurersReturn()
         {
             itemCreator.Creation(AS);

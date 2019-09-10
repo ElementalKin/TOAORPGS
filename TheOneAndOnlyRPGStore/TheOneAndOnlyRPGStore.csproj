@@ -45,11 +45,12 @@
   <ItemGroup>
     <Compile Include="Adventurers.cs" />
     <Compile Include="Ask.cs" />
+    <Compile Include="Customer.cs" />
     <Compile Include="ItemCreation.cs" />
+    <Compile Include="PlayerStats.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Saving.cs" />
-    <Compile Include="Store.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

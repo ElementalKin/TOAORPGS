@@ -11,3 +11,4 @@ The way items will have random stats that will determin the value of the item, i
 
 The way that selling items will work is that the player would insert the price that they want to sell an item for, the game will compare the value the player wants to sell the item for and the actual value of the item, if the price the player set is less than the value then it will increase the the chance that the item will be purchased if its more than the value of the item than it decreases the chance that the item will be purchased.
 (ie. If the item is a chipped wooden sword will have a value 5 gold and the player wants to sell it for 7 gold then the chance that the item will be sold will be lowered but the player wants to sell it for 3 gold then it will increase the chance that it will be sold)
+# TOAORPGS

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace TheOneAndOnlyRPGStore
 {
-    class Store
+    class PlayerStats
     {
+
+        public int ItemsSold;
+        public int AdventurersSentOut;
+        public int TotalGoldEArned;
     }
 }
