@@ -283,7 +283,7 @@ namespace TheOneAndOnlyRPGStore
         public void GettingValue(int x)
         {
             Item item = Inv[x];
-            Console.Write($"| {item.quality} {item.material} {item.TypeOfWeapon}(it is Worth {item.value})|\n");
+            Console.Write($"{item.quality} {item.material} {item.TypeOfWeapon}(it is Worth {item.value})\n");
         }
         public void GettingValue2(int x)
         {

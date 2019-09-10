@@ -35,11 +35,14 @@ namespace TheOneAndOnlyRPGStore
         }
         public void LVLUP()
         {
-            if (AXP >= XPTNLVL)
+            if (ALVL < 15)
             {
-                ALVL += 1;
-                XPTNLVL = XPTNLVL * 1.5;
-                Console.WriteLine("The Adventurers Guild has lvled up");
+                if (AXP >= XPTNLVL)
+                {
+                    ALVL += 1;
+                    XPTNLVL = XPTNLVL * 1.5;
+                    Console.WriteLine("The Adventurers Guild has lvled up");
+                }
             }
         }
 
