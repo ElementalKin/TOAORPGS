@@ -8,9 +8,8 @@ namespace TheOneAndOnlyRPGStore
 {
     class PlayerStats
     {
-
-        public int ItemsSold;
-        public int AdventurersSentOut;
-        public int TotalGoldEArned;
+        //public int ItemsSold;
+        //public int AdventurersSentOut;
+        //public int TotalGoldEArned;
     }
 }

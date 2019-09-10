@@ -14,16 +14,18 @@ namespace TheOneAndOnlyRPGStore
         public void CustomersDecision(int Cost, int Price)
         {
             ItemSold = false;
-            double ChanceToBuy = 75;
+            double ChanceToBuy = 25;
             if (Cost >= Price)
             {
-                ChanceToBuy += (Price%Cost);
+                ChanceToBuy += 10*(Cost / Price);
+                Console.WriteLine(ChanceToBuy);
             }
             else
             {
-                ChanceToBuy -= (Price % Cost);
+                ChanceToBuy -= 10*(Price / Cost);
+                Console.WriteLine(ChanceToBuy);
             }
-            if (ChanceToBuy >= random.Next(0, 100))
+            if (ChanceToBuy >= random.Next(0, 50))
             {
                 Console.WriteLine("I'll buy it.");
                 ItemSold = true;

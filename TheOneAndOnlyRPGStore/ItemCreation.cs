@@ -26,7 +26,7 @@ namespace TheOneAndOnlyRPGStore
         public string[] WM = new string[4] { "Copper", "Bronze", "Iron", "Steel" };
         public string[] WT = new string[20] { "Falchion", "Arming Sword", "LongSword", "Rapier", "Claymore", "Hiunting Dagger", "Dirk", "Axe", "Two-Handed Axe", "Halberd", "Short Spear", "Boar Spear", "War Spear", "Pike", "War Scythe", "Spiked Club", "War Hammer", "Morning Star", "War Pick", "Quater Staff" };
         public string[] BQ = new string[8] { "Old", "Cheap", "Poor", "Bent", "Plain", "Balanced", "Strong", "MasterWork" };
-        public string[] BM = new string[6] { "Oak", "Maple", "Beech", "Ash", "Hickory", "Yew" };
+        public string[] BM = new string[6] { "Oak", "Maple", "Beech", "Ash", "Hickory", "Yew"};
         public string[] BT = new string[5] { "Hunting Bow", "Short Bow", "Long Bow", "Recurve Bow", "War Bow" };
         public string[] AQ = new string[12] { "Cracked", "Tattered", "Rusty", "Ragged", "Battered", "Crude", "Plain", "sturdy", "thick", "Hardened", "Reinforced", "Lordly" };
         public string[] AM = new string[4] { "Copper", "Bronze", "Iron", "Steel" };
@@ -37,30 +37,12 @@ namespace TheOneAndOnlyRPGStore
         public int InvetoryCount = 0;
         public int InvetoryIdx = 0;
         public int Cost;
-        private int[] RemoveIndices(int[] IndicesArray, int RemoveAt)
-        {
-            int[] newIndicesArray = new int[IndicesArray.Length - 1];
 
-            int i = 0;
-            int j = 0;
-            while (i < IndicesArray.Length)
-            {
-                if (i != RemoveAt)
-                {
-                    newIndicesArray[j] = IndicesArray[i];
-                    j++;
-                }
-
-                i++;
-            }
-
-            return newIndicesArray;
-        }
 
         //Creates a random number.
         Random random = new Random();
         //This can be called to create an item and it will store the item to the inventory of the player.
-        public void Creation(int x)
+        public void Creation(int x, int y)
         {
             for(int n = 0; n < x;n++)
             {
@@ -68,12 +50,15 @@ namespace TheOneAndOnlyRPGStore
                 string Q = "";
                 string M = "";
                 string T = "";
-
+                if (y > 100)
+                {
+                    y = 100;
+                }
                 int Type = 0;
                 Type = random.Next(0, 2);
                 tmp.value = 0;
-                int RQ = random.Next(0, 100);
-                int RM = random.Next(0, 100);
+                int RQ = random.Next(y, 100);
+                int RM = random.Next(y, 100);
                 int RW;
 
                 if (Type == 0)
@@ -298,7 +283,7 @@ namespace TheOneAndOnlyRPGStore
         public void GettingValue(int x)
         {
             Item item = Inv[x];
-            Console.Write($" {item.quality} {item.material} {item.TypeOfWeapon}(it is Worth {item.value})");
+            Console.Write($"| {item.quality} {item.material} {item.TypeOfWeapon}(it is Worth {item.value})|\n");
         }
         public void GettingValue2(int x)
         {

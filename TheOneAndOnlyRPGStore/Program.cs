@@ -22,24 +22,29 @@ namespace TheOneAndOnlyRPGStore
 
         }
         static void Help()
-        {
+        {                          //A very basic help menu
             Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}" +
-                            "\n| Type exit to close the program (this will NOT save your game)                                                      |" +
-                            "\n| Type inventory to check out what you have in you inventory                                                         |" +
-                            "\n| Type adventurers to send out people to gather items(cost of each adventurer is 25 * guild lvl)                     |" +
-                            "\n| Type shop to check out you shop and put items up for sale (there is a max of 10 items you can put up for sale)     |" +
-                            "\n| The shop works by giving you a customer that want to buy an item from your invetory you will give a price and the -|" +
-                            "\n| will decide if they want to buy it or not                                                                          |"+
-                            "\n| Type save to save your game                                                                                        |" +
-                            "\n| Type gold to see how much gold you currently have                                                                  |" +
+                            "\n| You have 12 hours evry day to be able to send out adventurers and sell items in your shop. At the end of the day - |" +
+                            "\n| you will get one item that the adventurers bring back.                                                             |" +
+                            "\n| Type 1 to check out what you have in you inventory.                                                                |" +
+                            "\n| Type 2 to send out people to gather items(cost of each adventurer is 25 * guild lvl).                              |" +
+                            "\n| Type 3 to go to your shop and sell items.                                                                          |" +
+                            "\n| Type 4 to close up for the day.                                                                                    |" +
+                            "\n| Type exit to close the program (this will NOT save your game).                                                     |" +
+                            "\n| Type save to save your game.                                                                                       |" +
+                            "\n| Type gold to see how much gold you currently have.                                                                 |" +
                             "\n| Type menu to go back to the main menu (this will save your game)                                                   |" +
+                            "\n|                                                                                                                    |" +
+                            "\n|                                                    Extra Info                                                      |" +
+                            "\n|                                                                                                                    |" +
+                            "\n| The shop works by giving you a customer that want to buy an item from your invetory you will give a price and the -|" +
+                            "\n| will decide if they want to buy it or not                                                                          |" +
                             "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}");
         }
 
 
         public static void Main()
         {
-            //cmd and lCmd are used to take the users input and 
             string cmd = "";
             string lCmd = "";
             //IBS = Items being sold
@@ -51,7 +56,8 @@ namespace TheOneAndOnlyRPGStore
             PlayerStats ps = new PlayerStats();
             bool New = false;
             bool Saved = false;
-            int PlayerGold= 0;
+            int PlayerGold = 0;
+            int HoursLeft = 12;
             MainMenu();
             while (lCmd != "exit")
             {
@@ -65,7 +71,7 @@ namespace TheOneAndOnlyRPGStore
                     Console.WriteLine("If you need help type help into the command prompt to bring up a list of commands.");
                     Console.WriteLine("Here are some starting items.");
                     Console.WriteLine("");
-                    itemCreator.Creation(5);
+                    itemCreator.Creation(5, 0);
                     Console.WriteLine("");
 
                 }
@@ -77,10 +83,10 @@ namespace TheOneAndOnlyRPGStore
                 }
                 while (New == true || Saved == true)
                 {
-                    cmd = eg.Ask("What would you like to do? ");
+                    cmd = eg.Ask($"What would you like to do? \nYou currently have {HoursLeft} hours left to do something. ");
                     lCmd = cmd.ToLower();
                     //Displays the players inventory
-                    if (lCmd == "inventory")
+                    if (lCmd == "1")
                     {
                         itemCreator.Inventory();
                     }
@@ -90,72 +96,89 @@ namespace TheOneAndOnlyRPGStore
                         Help();
                     }
                     //Used to schedule an adventurer to gather items
-                    if (lCmd == "adventurers" || lCmd == "ag")
+                    if (lCmd == "2")
                     {
-                        Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}" +
-                                       $"\n The Adventurers guild is LVL {ad.ALVL} and are {ad.AXP} out of {ad.XPTNLVL} to the next LVL" +
-                                       $"\n Each Adventurer will cost {25 * ad.ALVL}" +
-                                       $"\n You currently have {ad.AS} out gathering items" +
-                                        "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}");
-                        lCmd = eg.Ask("Do you want to send out any Adventurers? " +
-                                      "\nType yes to send out adventurers or type anything else to go back to the command screen. " +
-                                      "\n");
-                        if(lCmd == "yes")
+                        if (HoursLeft > 0)
                         {
-                            int.TryParse(eg.Ask("How many adventurers would you like to send? "), out ad.AWTS);
-                            ad.AC = ad.AWTS * (25 * ad.ALVL);
-                            if (ad.AC <= PlayerGold && itemCreator.InvetoryCount <= 100)
+                            Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}" +
+                                           $"\n The Adventurers guild is LVL {ad.ALVL} and are {ad.AXP} out of {ad.XPTNLVL} to the next LVL" +
+                                           $"\n Each Adventurer will cost {25 * ad.ALVL}" +
+                                           $"\n You currently have {ad.AS} out gathering items" +
+                                            "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}");
+                            lCmd = eg.Ask("Do you want to send out any Adventurers? " +
+                                          "\nType yes to send out adventurers or type anything else to go back to the command screen. " +
+                                          "\n");
+                            if (lCmd == "yes")
                             {
-                                ad.AS += ad.AWTS;
-                                Console.WriteLine($"you have sent out {ad.AS} Adventurers!");
-                                PlayerGold -= ad.AC;
+                                int.TryParse(eg.Ask("How many adventurers would you like to send? "), out ad.AWTS);
+                                ad.AC = ad.AWTS * (25 * ad.ALVL);
+                                if (ad.AC <= PlayerGold && itemCreator.InvetoryCount <= 100)
+                                {
+                                    ad.AS += ad.AWTS;
+                                    Console.WriteLine($"you have sent out {ad.AS} Adventurers!");
+                                    PlayerGold -= ad.AC;
+                                    HoursLeft -= 1;
+                                }
+                                else if (ad.AC > PlayerGold)
+                                {
+                                    Console.WriteLine("You do not have the gold to fund this many adventurers.");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("You already have to many items. sell some before you send out more adventurers!");
+                                }
                             }
-                            else if (ad.AC > PlayerGold)
-                            {
-                                Console.WriteLine("You do not have the gold to fund this many adventurers.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("You already have to many items. sell some before you send out more adventurers!");
-                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("It is too late to send out adventurers.");
                         }
                     }
                     //Will allow the player to see what they are selling, the chance the item is sold, and how much each item is being sold for
-                    if (lCmd == "shop")
+                    if (lCmd == "3")
                     {
-                        lCmd = eg.Ask("Do you want to work at your shop This hour?" +
-                                    "\nType sell to work the shop, do anthing else to go back." +
-                                    "\n");
-                        if (lCmd == "sell" && itemCreator.InvetoryCount > 0)
+                        if (HoursLeft > 0)
                         {
-                            int CustomersChoice;
-                            int Price;
-                            CustomersChoice = random.Next(0, itemCreator.InvetoryCount);
-                            Console.WriteLine("");
-                            Console.WriteLine("After a while a costumer enters the shop asking about the price of");
-                            itemCreator.GettingValue(CustomersChoice);
-                            int.TryParse(eg.Ask("How much would you like to sell the item for?"), out Price);
-                            itemCreator.GettingValue2(CustomersChoice);
-                            customer.CustomersDecision(itemCreator.Cost ,Price);
-                            if (customer.ItemSold)
+                            lCmd = eg.Ask("{=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}" +
+                                        "\n|Do you want to work at your shop This hour?                  |" +
+                                        "\nType sell to work the shop, do anthing else to go back.       |" +
+                                        "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}\n");
+                            if (lCmd == "sell" && itemCreator.InvetoryCount > 0)
                             {
-                                
-                                PlayerGold += Price;
+
+                                int CustomersChoice;
+                                int Price;
+                                CustomersChoice = random.Next(0, itemCreator.InvetoryCount);
+                                Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}"+
+                                                "\n|After a while a costumer enters the shop asking about the price of   |");
+                                itemCreator.GettingValue(CustomersChoice);
+                                Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}\n");
+                                int.TryParse(eg.Ask("How much would you like to sell the item for?"), out Price);
+                                itemCreator.GettingValue2(CustomersChoice);
+                                customer.CustomersDecision(itemCreator.Cost, Price);
+                                HoursLeft -= 1;
+                                if (customer.ItemSold)
+                                {
+
+                                    PlayerGold += Price;
+                                }
+
                             }
 
                         }
-                        else if(lCmd == "stock")
+                        else
                         {
-                            
+                            Console.WriteLine("it is too late to open the store now.");
                         }
 
                     }
                     //Ends the day
-                    if (lCmd == "close")
+                    if (lCmd == "4")
                     {
-                        lCmd = eg.Ask("Do you really want to go to close up for the day?" +
-                                      "\nType yes to close, type anything else to do something else." +
-                                      "\n");
+                        lCmd = eg.Ask("{=-=-=-=-=-=-=-=-=-=-=-=-{ -}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}" +
+                                    "\n|Do you want to go to close up for the day?                    |" +
+                                    "\n|Type yes to close, type anything else to do something else.   |" +
+                                    "\n{=-=-=-=-=-=-=-=-=-=-=-=-{ -}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}\n");
                         if (lCmd == "yes")
                         {
                             if (ad.AS > 0)
@@ -177,11 +200,21 @@ namespace TheOneAndOnlyRPGStore
                     //Creates an item(Developer tool)
                     if (lCmd == "create")
                     {
-                        itemCreator.Creation(1);
+                        itemCreator.Creation(1, 5 * ad.ALVL);
                     }
                     if (lCmd == "gold")
                     {
                         Console.WriteLine($"You have {PlayerGold}");
+                    }
+                    if (lCmd == "time")
+                    {
+                        Console.WriteLine($"Hours left {HoursLeft}");
+                    }
+                    if (lCmd == "exit")
+                    {
+                        New = false;
+                        Saved = false;
+                        lCmd = "exit";
                     }
                 }
             }
@@ -189,3 +222,5 @@ namespace TheOneAndOnlyRPGStore
         }
     }
 }
+
+
