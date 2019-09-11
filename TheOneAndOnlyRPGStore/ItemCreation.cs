@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace TheOneAndOnlyRPGStore
 {
-
-
-    class ItemCreation
-    {
-        //Structure for creating an item.
-        public struct Item
+    public struct Item
         {
             public string quality;
             public string material;
             public string TypeOfWeapon;
             public int value;
         }
+
+    class ItemCreation
+    {
+        //Structure for creating an item.
+        
 
         //All of the qualitys, material, and type of weapon.
         //Q = weapon quality, M = weapon material, T = weapon type
@@ -33,7 +33,7 @@ namespace TheOneAndOnlyRPGStore
         public string[] AT = new string[5] { "Chainmail", "Cuirasses", "Chestplate", "Halfplate", "FullPlate", };
         Asks eg = new Asks();
         Program program = new Program();
-        public Item[] Inv = new Item[100];
+        public static Item[] Inv = new Item[100];
         public int InvetoryCount = 0;
         public int InvetoryIdx = 0;
         public int Cost;
@@ -274,7 +274,6 @@ namespace TheOneAndOnlyRPGStore
                 tmp.TypeOfWeapon = T;
 
                 Inv[InvetoryCount] = tmp;
-                InvetoryCount++;
                 Console.WriteLine($"you get {Q} {M} {T} worth {tmp.value}");
             }
 
@@ -298,11 +297,19 @@ namespace TheOneAndOnlyRPGStore
         //A void for checking the invetory.
         public void Inventory()
         {
+            foreach (Item x in Inv)
+            {
+                if (x.quality != null)
+                {
+                    InvetoryCount++;
+                }
+            }
             Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}");
             for (int idx = 0; idx < InvetoryCount; idx++)
             {
                 Item item = Inv[idx];
                 eg.MyPrinter($"{item.quality} {item.material} {item.TypeOfWeapon} worth {item.value}");
+
             }
             Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}");
         }

@@ -41,7 +41,9 @@ namespace TheOneAndOnlyRPGStore
                             "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}");
         }
 
-
+        public static int PlayerGold = 0;
+        public static int HoursLeft = 12;
+        public static int Days = 0;
         public static void Main()
         {
             string cmd = "";
@@ -53,11 +55,10 @@ namespace TheOneAndOnlyRPGStore
             Random random = new Random();
             Customer customer = new Customer();
             PlayerStats ps = new PlayerStats();
+            Saving saveandload = new Saving();
             bool New = false;
-            bool Saved = false;
-            int PlayerGold = 0;
-            int HoursLeft = 12;
-            int Days = 0;
+            bool Loaded = false;
+
             MainMenu();
             while (lCmd != "exit")
             {
@@ -78,24 +79,25 @@ namespace TheOneAndOnlyRPGStore
                 //loads the save game.
                 if (lCmd == "load")
                 {
-                    lCmd = eg.Ask("Please insert name of save game");
+                    saveandload.ReadPI();
+                    Loaded = true;
 
                 }
-                while (New == true || Saved == true)
+                while (New == true || Loaded == true)
                 {
                     Console.Clear();
                     cmd = eg.Ask("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}" +
-                                "\nWhat would you like to do? " +
+                                "\nWhat would you like to do?\r\n " +
                                 "\nYou can check your inventory(1) " +
                                 "\nSend out adventurers(2) " +
                                 "\nSell an item at your shop(3) " +
                                 "\nClose up shop for the day(4) " +
+                               "\nIf you need any more help type help\r\n" +
                                $"\nNumber of days open {Days}. " +
                                $"\nYou have {HoursLeft} hours left to do something. " +
                                $"\nCurrent gold {PlayerGold}" + 
                                $"\nAmount of adventurers sent out is {ad.AS}" +
                                $"\nAdventurers Guild LVL is {ad.ALVL}" +
-                               "\nIf you need any more help type help" +
                                "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}\n");
                     lCmd = cmd.ToLower();
                     //Displays the players inventory
@@ -195,10 +197,10 @@ namespace TheOneAndOnlyRPGStore
                     //Ends the day
                     if (lCmd == "4")
                     {
-                        lCmd = eg.Ask("{=-=-=-=-=-=-=-=-=-=-=-=-{ -}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}" +
-                                    "\n|Do you want to go to close up for the day?                    |" +
-                                    "\n|Type yes to close, type anything else to do something else.   |" +
-                                    "\n{=-=-=-=-=-=-=-=-=-=-=-=-{ -}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}\n");
+                        lCmd = eg.Ask("{=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}" +
+                                    "\n|Do you want to go to close up for the day?                   |" +
+                                    "\n|Type yes to close, type anything else to do something else.  |" +
+                                    "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}\n");
                         if (lCmd == "yes")
                         {
                             if (ad.AS > 0)
@@ -218,7 +220,9 @@ namespace TheOneAndOnlyRPGStore
                     //Saves the game
                     if (lCmd == "save")
                     {
-
+                        saveandload.WritePI();
+                        Console.WriteLine("You have saved your game.");
+                        Console.ReadKey();
                     }
                     //Creates an item(Developer tool)
                     if (lCmd == "create")
@@ -228,7 +232,7 @@ namespace TheOneAndOnlyRPGStore
                     if (lCmd == "exit")
                     {
                         New = false;
-                        Saved = false;
+                        Loaded = false;
                         lCmd = "exit";
                     }
                 }
