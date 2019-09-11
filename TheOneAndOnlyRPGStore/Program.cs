@@ -57,6 +57,7 @@ namespace TheOneAndOnlyRPGStore
             bool Saved = false;
             int PlayerGold = 0;
             int HoursLeft = 12;
+            int Days = 0;
             MainMenu();
             while (lCmd != "exit")
             {
@@ -83,18 +84,19 @@ namespace TheOneAndOnlyRPGStore
                 while (New == true || Saved == true)
                 {
                     Console.Clear();
-                    cmd = eg.Ask("{=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}" +
+                    cmd = eg.Ask("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}" +
                                 "\nWhat would you like to do? " +
                                 "\nYou can check your inventory(1) " +
                                 "\nSend out adventurers(2) " +
                                 "\nSell an item at your shop(3) " +
                                 "\nClose up shop for the day(4) " +
+                               $"\nNumber of days open {Days}. " +
                                $"\nYou have {HoursLeft} hours left to do something. " +
                                $"\nCurrent gold {PlayerGold}" + 
                                $"\nAmount of adventurers sent out is {ad.AS}" +
                                $"\nAdventurers Guild LVL is {ad.ALVL}" +
                                "\nIf you need any more help type help" +
-                               "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}\n");
+                               "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}\n");
                     lCmd = cmd.ToLower();
                     //Displays the players inventory
                     if (lCmd == "1")
@@ -203,6 +205,8 @@ namespace TheOneAndOnlyRPGStore
                             {
                                 Console.WriteLine("the Adventurers you sent out have brought back");
                                 ad.AdventurersReturn();
+                                HoursLeft = 12;
+                                Days += 1;
                             }
                             else
                             {

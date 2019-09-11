@@ -17,8 +17,7 @@ namespace TheOneAndOnlyRPGStore
             double ChanceToBuy = 25;
             if (Cost >= Price)
             {
-                ChanceToBuy += 10*(Cost / Price);
-                Console.WriteLine(ChanceToBuy);
+                ChanceToBuy += 10*(Cost / Price);;
             }
             else
             {

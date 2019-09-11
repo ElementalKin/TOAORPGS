@@ -291,14 +291,20 @@ namespace TheOneAndOnlyRPGStore
             Cost = item.value;
             
         }
+        public void DeleteTheItem()
+        {
+
+        }
         //A void for checking the invetory.
         public void Inventory()
         {
+            Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}");
             for (int idx = 0; idx < InvetoryCount; idx++)
             {
                 Item item = Inv[idx];
                 eg.MyPrinter($"{item.quality} {item.material} {item.TypeOfWeapon} worth {item.value}");
             }
+            Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}");
         }
     }
 }
