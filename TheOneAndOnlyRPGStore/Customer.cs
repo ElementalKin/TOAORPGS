@@ -23,7 +23,6 @@ namespace TheOneAndOnlyRPGStore
             else
             {
                 ChanceToBuy -= 10*(Price / Cost);
-                Console.WriteLine(ChanceToBuy);
             }
             if (ChanceToBuy >= random.Next(0, 50))
             {

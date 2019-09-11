@@ -31,8 +31,7 @@ namespace TheOneAndOnlyRPGStore
                             "\n| Type 3 to go to your shop and sell items.                                                                          |" +
                             "\n| Type 4 to close up for the day.                                                                                    |" +
                             "\n| Type exit to close the program (this will NOT save your game).                                                     |" +
-                            "\n| Type save to save your game.                                                                                       |" +
-                            "\n| Type gold to see how much gold you currently have.                                                                 |" +
+                            "\n| Type save to save your game.                                                                                       |" + 
                             "\n| Type menu to go back to the main menu (this will save your game)                                                   |" +
                             "\n|                                                                                                                    |" +
                             "\n|                                                    Extra Info                                                      |" +
@@ -83,17 +82,31 @@ namespace TheOneAndOnlyRPGStore
                 }
                 while (New == true || Saved == true)
                 {
-                    cmd = eg.Ask($"What would you like to do? \nYou currently have {HoursLeft} hours left to do something. ");
+                    Console.Clear();
+                    cmd = eg.Ask("{=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}" +
+                                "\nWhat would you like to do? " +
+                                "\nYou can check your inventory(1) " +
+                                "\nSend out adventurers(2) " +
+                                "\nSell an item at your shop(3) " +
+                                "\nClose up shop for the day(4) " +
+                               $"\nYou have {HoursLeft} hours left to do something. " +
+                               $"\nCurrent gold {PlayerGold}" + 
+                               $"\nAmount of adventurers sent out is {ad.AS}" +
+                               $"\nAdventurers Guild LVL is {ad.ALVL}" +
+                               "\nIf you need any more help type help" +
+                               "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}\n");
                     lCmd = cmd.ToLower();
                     //Displays the players inventory
                     if (lCmd == "1")
                     {
                         itemCreator.Inventory();
+                        eg.Ask("Input anything to go back to town square");
                     }
                     //Displays a help menu with a list of commands
                     if (lCmd == "help")
                     {
                         Help();
+                        eg.Ask("Input anything to go back to town square");
                     }
                     //Used to schedule an adventurer to gather items
                     if (lCmd == "2")
@@ -118,10 +131,12 @@ namespace TheOneAndOnlyRPGStore
                                     Console.WriteLine($"you have sent out {ad.AS} Adventurers!");
                                     PlayerGold -= ad.AC;
                                     HoursLeft -= 1;
+                                    eg.Ask("Input anything to go back to town square");
                                 }
                                 else if (ad.AC > PlayerGold)
                                 {
                                     Console.WriteLine("You do not have the gold to fund this many adventurers.");
+                                    eg.Ask("Input anything to go back to town square");
                                 }
                                 else
                                 {
@@ -132,7 +147,9 @@ namespace TheOneAndOnlyRPGStore
                         else
                         {
                             Console.WriteLine("It is too late to send out adventurers.");
+                            eg.Ask("Input anything to go back to town square");
                         }
+                        
                     }
                     //Will allow the player to see what they are selling, the chance the item is sold, and how much each item is being sold for
                     if (lCmd == "3")
@@ -141,16 +158,16 @@ namespace TheOneAndOnlyRPGStore
                         {
                             lCmd = eg.Ask("{=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}" +
                                         "\n|Do you want to work at your shop This hour?                  |" +
-                                        "\nType sell to work the shop, do anthing else to go back.       |" +
+                                        "\n|Type yes to work the shop, do anthing else to go back.       |" +
                                         "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}\n");
-                            if (lCmd == "sell" && itemCreator.InvetoryCount > 0)
+                            if (lCmd == "yes" && itemCreator.InvetoryCount > 0)
                             {
 
                                 int CustomersChoice;
                                 int Price;
                                 CustomersChoice = random.Next(0, itemCreator.InvetoryCount);
                                 Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}"+
-                                                "\n|After a while a costumer enters the shop asking about the price of   |");
+                                                "\nAfter a while a costumer enters the shop asking about the price of   ");
                                 itemCreator.GettingValue(CustomersChoice);
                                 Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}\n");
                                 int.TryParse(eg.Ask("How much would you like to sell the item for?"), out Price);
@@ -162,15 +179,16 @@ namespace TheOneAndOnlyRPGStore
 
                                     PlayerGold += Price;
                                 }
-
+                                eg.Ask("Input anything to go back to town square");
                             }
 
                         }
                         else
                         {
                             Console.WriteLine("it is too late to open the store now.");
+                            eg.Ask("Input anything to go back to town square");
                         }
-
+                        
                     }
                     //Ends the day
                     if (lCmd == "4")
@@ -190,6 +208,7 @@ namespace TheOneAndOnlyRPGStore
                             {
                                 Console.WriteLine("you sent out no adventurers");
                             }
+                            eg.Ask("Input anything to go back to town square");
                         }
                     }
                     //Saves the game
@@ -201,14 +220,6 @@ namespace TheOneAndOnlyRPGStore
                     if (lCmd == "create")
                     {
                         itemCreator.Creation(1, 5 * ad.ALVL);
-                    }
-                    if (lCmd == "gold")
-                    {
-                        Console.WriteLine($"You have {PlayerGold}");
-                    }
-                    if (lCmd == "time")
-                    {
-                        Console.WriteLine($"Hours left {HoursLeft}");
                     }
                     if (lCmd == "exit")
                     {
