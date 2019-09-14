@@ -21,16 +21,33 @@ namespace TheOneAndOnlyRPGStore
                 ItemCreation.Inv[i].TypeOfWeapon = items[x + 2];
                 int.TryParse(items[x + 3], out ItemCreation.Inv[i].value);
                 x += 4;
+                ItemCreation.InvetoryCount++;
             }
+            reader.Close();
+        }
+        public void ReadPS()
+        {
+            StreamReader reader = new StreamReader("PlayerStats.txt");
+            string[] items = reader.ReadLine().Split(',');
+            int.TryParse(items[0], out Program.PlayerGold);
+            int.TryParse(items[1], out Program.HoursLeft);
+            int.TryParse(items[2], out Program.Days);
+            int.TryParse(items[3], out Adventurers.ALVL);
+            int.TryParse(items[4], out Adventurers.AXP);
+            int.TryParse(items[5], out Adventurers.AS);
+            double.TryParse(items[6], out Adventurers.XPTNLVL);
             reader.Close();
         }
         public void WritePS()
         {
             StreamWriter writer = new StreamWriter("PlayerStats.txt");
-            writer.Write(Program.PlayerGold);
-            writer.Write(Program.HoursLeft);
-            writer.Write(Program.Days);
-            writer.Write(Adventurers.);
+            writer.Write($"{Program.PlayerGold},");
+            writer.Write($"{Program.HoursLeft},");
+            writer.Write($"{Program.Days},");
+            writer.Write($"{Adventurers.ALVL},");
+            writer.Write($"{Adventurers.AXP},");
+            writer.Write($"{Adventurers.AS},");
+            writer.Write($"{Adventurers.XPTNLVL}");
             writer.Close();
         }
         public void WritePI()

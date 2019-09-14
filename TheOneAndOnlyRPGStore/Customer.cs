@@ -10,10 +10,10 @@ namespace TheOneAndOnlyRPGStore
     {
         Program program = new Program();
         Random random = new Random();
-        public bool ItemSold = false;
-        public void CustomersDecision(int Cost, int Price)
+        public bool Sold = false;
+        public void CustomersDecision(int Cost, int Price, int choice)
         {
-            ItemSold = false;
+            int CustomersChoice = choice;
             double ChanceToBuy = 25;
             if (Cost >= Price)
             {
@@ -26,7 +26,8 @@ namespace TheOneAndOnlyRPGStore
             if (ChanceToBuy >= random.Next(0, 50))
             {
                 Console.WriteLine("I'll buy it.");
-                ItemSold = true;
+                Sold = true;
+                Program.PlayerGold += Price;
             }
             else
             {

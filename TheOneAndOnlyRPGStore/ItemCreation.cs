@@ -34,7 +34,7 @@ namespace TheOneAndOnlyRPGStore
         Asks eg = new Asks();
         Program program = new Program();
         public static Item[] Inv = new Item[100];
-        public int InvetoryCount = 0;
+        public static int InvetoryCount = 0;
         public int InvetoryIdx = 0;
         public int Cost;
 
@@ -274,6 +274,7 @@ namespace TheOneAndOnlyRPGStore
                 tmp.TypeOfWeapon = T;
 
                 Inv[InvetoryCount] = tmp;
+                InvetoryCount++;
                 Console.WriteLine($"you get {Q} {M} {T} worth {tmp.value}");
             }
 
@@ -290,20 +291,25 @@ namespace TheOneAndOnlyRPGStore
             Cost = item.value;
             
         }
-        public void DeleteTheItem()
+        public void DeleteTheItem(int x)
         {
 
+            for (int i = 0; i <= InvetoryCount; i++)
+            {
+                Item inv = Inv[x];
+                Item item = Inv[x + 1];
+                inv.quality = item.quality;
+                inv.material = item.material;
+                inv.TypeOfWeapon = item.TypeOfWeapon;
+                inv.value = item.value;
+                Inv[x] = inv;
+                x++;
+            }
+            InvetoryCount--;
         }
         //A void for checking the invetory.
         public void Inventory()
         {
-            foreach (Item x in Inv)
-            {
-                if (x.quality != null)
-                {
-                    InvetoryCount++;
-                }
-            }
             Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}");
             for (int idx = 0; idx < InvetoryCount; idx++)
             {

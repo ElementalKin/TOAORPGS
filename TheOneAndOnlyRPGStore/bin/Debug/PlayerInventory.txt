@@ -1,1 +1,1 @@
-Plain ,Copper,Rapier,85,Bent,Copper,Spiked Club,80,Rusty,Copper,Claymore,80,Plain ,Steel,Halberd,285,Balanced,Oak,Short Bow,55
+Rusty,Copper,Falchion,80

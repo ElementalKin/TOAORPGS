@@ -15,11 +15,11 @@ namespace TheOneAndOnlyRPGStore
         public int AWTS;
         public int AC;
 
-        public int AS;
-        public int AXP;
-        public int ALVL  = 1;
+        public static int AS;
+        public static int AXP;
+        public static int ALVL  = 1;
         // The amount of xp the needed for the next lvl
-        public double XPTNLVL = 100;
+        public static double XPTNLVL = 100;
         private Random random = new Random();
         //this code will be run at the end of the day when you close
         public void AdventurersReturn()

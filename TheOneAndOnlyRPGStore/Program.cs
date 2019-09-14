@@ -70,16 +70,16 @@ namespace TheOneAndOnlyRPGStore
                     New = true;
                     PlayerGold += 100;
                     Console.WriteLine("If you need help type help into the command prompt to bring up a list of commands.");
-                    Console.WriteLine("Here are some starting items.");
-                    Console.WriteLine("");
+                    Console.WriteLine("Here are some starting items.\r\n");
                     itemCreator.Creation(5, 0);
-                    Console.WriteLine("");
-
+                    Console.WriteLine("\r\nInput Anything to continue.");
+                    Console.ReadKey();
                 }
                 //loads the save game.
                 if (lCmd == "load")
                 {
                     saveandload.ReadPI();
+                    saveandload.ReadPS();
                     Loaded = true;
 
                 }
@@ -96,8 +96,8 @@ namespace TheOneAndOnlyRPGStore
                                $"\nNumber of days open {Days}. " +
                                $"\nYou have {HoursLeft} hours left to do something. " +
                                $"\nCurrent gold {PlayerGold}" + 
-                               $"\nAmount of adventurers sent out is {ad.AS}" +
-                               $"\nAdventurers Guild LVL is {ad.ALVL}" +
+                               $"\nAmount of adventurers sent out is {Adventurers.AS}" +
+                               $"\nAdventurers Guild LVL is {Adventurers.ALVL}" +
                                "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}\n");
                     lCmd = cmd.ToLower();
                     //Displays the players inventory
@@ -118,9 +118,9 @@ namespace TheOneAndOnlyRPGStore
                         if (HoursLeft > 0)
                         {
                             Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}" +
-                                           $"\n The Adventurers guild is LVL {ad.ALVL} and are {ad.AXP} out of {ad.XPTNLVL} to the next LVL" +
-                                           $"\n Each Adventurer will cost {25 * ad.ALVL}" +
-                                           $"\n You currently have {ad.AS} out gathering items" +
+                                           $"\n The Adventurers guild is LVL {Adventurers.ALVL} and are {Adventurers.AXP} out of {Adventurers.XPTNLVL} to the next LVL" +
+                                           $"\n Each Adventurer will cost {25 * Adventurers.ALVL}" +
+                                           $"\n You currently have {Adventurers.AS} out gathering items" +
                                             "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-{-}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=}");
                             lCmd = eg.Ask("Do you want to send out any Adventurers? " +
                                           "\nType yes to send out adventurers or type anything else to go back to the command screen. " +
@@ -128,12 +128,12 @@ namespace TheOneAndOnlyRPGStore
                             if (lCmd == "yes")
                             {
                                 int.TryParse(eg.Ask("How many adventurers would you like to send? "), out ad.AWTS);
-                                ad.AC = ad.AWTS * (25 * ad.ALVL);
-                                if (ad.AC <= PlayerGold && itemCreator.InvetoryCount <= 100)
+                                ad.AC = ad.AWTS * (25 * Adventurers.ALVL);
+                                if (ad.AC <= PlayerGold && ItemCreation.InvetoryCount <= 100)
                                 {
-                                    ad.AS += ad.AWTS;
-                                    Console.WriteLine($"you have sent out {ad.AS} Adventurers!");
-                                    PlayerGold -= ad.AC;
+                                    Adventurers.AS += ad.AWTS;
+                                    Console.WriteLine($"you have sent out {Adventurers.AS} Adventurers!");
+                                   PlayerGold -= ad.AC;
                                     HoursLeft -= 1;
                                     eg.Ask("Input anything to go back to town square");
                                 }
@@ -164,26 +164,26 @@ namespace TheOneAndOnlyRPGStore
                                         "\n|Do you want to work at your shop This hour?                  |" +
                                         "\n|Type yes to work the shop, do anthing else to go back.       |" +
                                         "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}\n");
-                            if (lCmd == "yes" && itemCreator.InvetoryCount > 0)
+                            if (lCmd == "yes" && ItemCreation.InvetoryCount > 0)
                             {
 
                                 int CustomersChoice;
                                 int Price;
-                                CustomersChoice = random.Next(0, itemCreator.InvetoryCount);
+                                CustomersChoice = random.Next(0, ItemCreation.InvetoryCount);
                                 Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}"+
                                                 "\nAfter a while a costumer enters the shop asking about the price of   ");
                                 itemCreator.GettingValue(CustomersChoice);
                                 Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}\n");
                                 int.TryParse(eg.Ask("How much would you like to sell the item for?"), out Price);
                                 itemCreator.GettingValue2(CustomersChoice);
-                                customer.CustomersDecision(itemCreator.Cost, Price);
+                                customer.CustomersDecision(itemCreator.Cost, Price, CustomersChoice);
                                 HoursLeft -= 1;
-                                if (customer.ItemSold)
-                                {
-
-                                    PlayerGold += Price;
-                                }
                                 eg.Ask("Input anything to go back to town square");
+                                if (customer.Sold)
+                                {
+                                    itemCreator.DeleteTheItem(CustomersChoice);
+                                    customer.Sold = false;
+                                }
                             }
 
                         }
@@ -203,7 +203,7 @@ namespace TheOneAndOnlyRPGStore
                                     "\n{=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}\n");
                         if (lCmd == "yes")
                         {
-                            if (ad.AS > 0)
+                            if (Adventurers.AS > 0)
                             {
                                 Console.WriteLine("the Adventurers you sent out have brought back");
                                 ad.AdventurersReturn();
@@ -221,13 +221,14 @@ namespace TheOneAndOnlyRPGStore
                     if (lCmd == "save")
                     {
                         saveandload.WritePI();
+                        saveandload.WritePS();
                         Console.WriteLine("You have saved your game.");
                         Console.ReadKey();
                     }
                     //Creates an item(Developer tool)
                     if (lCmd == "create")
                     {
-                        itemCreator.Creation(1, 5 * ad.ALVL);
+                        itemCreator.Creation(1, 5 * Adventurers.ALVL);
                     }
                     if (lCmd == "exit")
                     {

@@ -5,3 +5,10 @@ C:\Users\s199102\source\repos\TheOneAndOnlyRPGStore\TheOneAndOnlyRPGStore\bin\De
 C:\Users\s199102\source\repos\TheOneAndOnlyRPGStore\TheOneAndOnlyRPGStore\bin\Debug\TheOneAndOnlyRPGStore.pdb
 C:\Users\s199102\source\repos\TheOneAndOnlyRPGStore\TheOneAndOnlyRPGStore\obj\Debug\TheOneAndOnlyRPGStore.exe
 C:\Users\s199102\source\repos\TheOneAndOnlyRPGStore\TheOneAndOnlyRPGStore\obj\Debug\TheOneAndOnlyRPGStore.pdb
+C:\Users\13609\Documents\AIEWork\TOAORPGS\TheOneAndOnlyRPGStore\obj\Debug\TheOneAndOnlyRPGStore.csprojAssemblyReference.cache
+C:\Users\13609\Documents\AIEWork\TOAORPGS\TheOneAndOnlyRPGStore\obj\Debug\TheOneAndOnlyRPGStore.csproj.CoreCompileInputs.cache
+C:\Users\13609\Documents\AIEWork\TOAORPGS\TheOneAndOnlyRPGStore\obj\Debug\TheOneAndOnlyRPGStore.exe
+C:\Users\13609\Documents\AIEWork\TOAORPGS\TheOneAndOnlyRPGStore\obj\Debug\TheOneAndOnlyRPGStore.pdb
+C:\Users\13609\Documents\AIEWork\TOAORPGS\TheOneAndOnlyRPGStore\bin\Debug\TheOneAndOnlyRPGStore.exe.config
+C:\Users\13609\Documents\AIEWork\TOAORPGS\TheOneAndOnlyRPGStore\bin\Debug\TheOneAndOnlyRPGStore.exe
+C:\Users\13609\Documents\AIEWork\TOAORPGS\TheOneAndOnlyRPGStore\bin\Debug\TheOneAndOnlyRPGStore.pdb
