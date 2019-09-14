@@ -24,7 +24,7 @@ namespace TheOneAndOnlyRPGStore
         //W = weapon, B = Bow, A = Armour
         public string[] WQ = new string[10] { "Cracked", "Bent", "Rusty", "Chipped", "Plain ", "Heavy", "Balanced", "Strong", "Tempered", "Masterwork" };
         public string[] WM = new string[4] { "Copper", "Bronze", "Iron", "Steel" };
-        public string[] WT = new string[20] { "Falchion", "Arming Sword", "LongSword", "Rapier", "Claymore", "Hiunting Dagger", "Dirk", "Axe", "Two-Handed Axe", "Halberd", "Short Spear", "Boar Spear", "War Spear", "Pike", "War Scythe", "Spiked Club", "War Hammer", "Morning Star", "War Pick", "Quater Staff" };
+        public string[] WT = new string[20] { "Falchion", "Arming Sword", "LongSword", "Rapier", "Claymore", "Hunting Dagger", "Dirk", "Axe", "Two-Handed Axe", "Halberd", "Short Spear", "Boar Spear", "War Spear", "Pike", "War Scythe", "Spiked Club", "War Hammer", "Morning Star", "War Pick", "Quater Staff" };
         public string[] BQ = new string[8] { "Old", "Cheap", "Poor", "Bent", "Plain", "Balanced", "Strong", "MasterWork" };
         public string[] BM = new string[6] { "Oak", "Maple", "Beech", "Ash", "Hickory", "Yew"};
         public string[] BT = new string[5] { "Hunting Bow", "Short Bow", "Long Bow", "Recurve Bow", "War Bow" };
