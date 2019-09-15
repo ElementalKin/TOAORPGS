@@ -175,14 +175,21 @@ namespace TheOneAndOnlyRPGStore
                                 itemCreator.GettingValue(CustomersChoice);
                                 Console.WriteLine("{=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-={-}=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=}\n");
                                 int.TryParse(eg.Ask("How much would you like to sell the item for?"), out Price);
-                                itemCreator.GettingValue2(CustomersChoice);
-                                customer.CustomersDecision(itemCreator.Cost, Price, CustomersChoice);
-                                HoursLeft -= 1;
-                                eg.Ask("Input anything to go back to town square");
-                                if (customer.Sold)
+                                if (Price > 0) {
+                                    itemCreator.GettingValue2(CustomersChoice);
+                                    customer.CustomersDecision(itemCreator.Cost, Price, CustomersChoice);
+                                    HoursLeft -= 1;
+                                    eg.Ask("Input anything to go back to town square");
+                                    if (customer.Sold)
+                                    {
+                                        itemCreator.DeleteTheItem(CustomersChoice);
+                                        customer.Sold = false;
+                                    }
+                                }
+                                else
                                 {
-                                    itemCreator.DeleteTheItem(CustomersChoice);
-                                    customer.Sold = false;
+                                    Console.WriteLine("Please input a number above 0.");
+                                    Console.ReadKey();
                                 }
                             }
 
