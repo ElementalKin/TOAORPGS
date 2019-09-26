@@ -28,6 +28,8 @@ namespace TheOneAndOnlyRPGStore
                 Console.WriteLine("I'll buy it.");
                 Sold = true;
                 Program.PlayerGold += Price;
+                Program.TotalGoldEarned += Price;
+                Program.TotalItemsSold += 1;
             }
             else
             {

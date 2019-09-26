@@ -276,6 +276,7 @@ namespace TheOneAndOnlyRPGStore
                 Inv[InvetoryCount] = tmp;
                 InvetoryCount++;
                 Console.WriteLine($"you get {Q} {M} {T} worth {tmp.value}");
+                Program.TotalItemsMade += 1;
             }
 
 
