@@ -12,7 +12,7 @@ namespace TheOneAndOnlyRPGStore
         public void ReadPI()
         {
             StreamReader reader = new StreamReader("PlayerInventory.txt");
-            if (reader.ReadLine() != null)
+            if (new FileInfo("PlayerInventory.txt").Length != 0)
             {
                 string[] items = reader.ReadLine().Split(',');
                 int x = 0;
